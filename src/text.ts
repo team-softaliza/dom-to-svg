@@ -66,7 +66,11 @@ export function handleTextNode(textNode: Text, context: TraversalContext): void 
 				selection.removeAllRanges()
 			}
 
-			textSpan.setAttribute('x', lineRectangle.x.toString())
+			let x = lineRectangle.x;
+			if (parentElement.style.textAnchor == 'middle' || parentElement.parentElement?.style.textAnchor == 'middle') {
+				x += lineRectangle.width / 2
+			}
+			textSpan.setAttribute('x', x.toString());
 			textSpan.setAttribute('y', lineRectangle.bottom.toString()) // intentionally bottom because of dominant-baseline setting
 			textSpan.setAttribute('textLength', lineRectangle.width.toString())
 			textSpan.setAttribute('lengthAdjust', 'spacingAndGlyphs')
